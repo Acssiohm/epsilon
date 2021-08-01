@@ -1,5 +1,6 @@
 #include "app.h"
 #include <apps/i18n.h>
+#include "my_app.h"
 
 extern "C" {
 #include <assert.h>
