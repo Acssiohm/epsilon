@@ -3,6 +3,7 @@ app_headers += apps/my_app/app.h
 
 app_my_src = $(addprefix apps/my_app/,\
   app.cpp \
+  content.cpp \
 )
 
 app_my_src += $(app_my_test_src)

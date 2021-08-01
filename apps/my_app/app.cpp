@@ -30,7 +30,7 @@ App::Descriptor * App::Snapshot::descriptor() {
 }
 
 App::App(Snapshot * snapshot) :
-  ::App(snapshot, nullptr, I18n::Message::Warning)
+  ::App(snapshot, &m_main, I18n::Message::Warning)
 {
 }
 
