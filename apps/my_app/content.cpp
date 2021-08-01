@@ -37,7 +37,7 @@ bool MyController::handleEvent(Ion::Events::Event event) {
    && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
     float delta = 0.1;
     float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
-    float lvl =  (&m_gaugeCells[rowIndex]) -> accessoryView() -> level();
+    float lvl =  ((GaugeView * )((&m_gaugeCells[rowIndex]) -> accessoryView())) -> level();
     (&m_gaugeCells[rowIndex]) -> accessoryView()-> setLevel(lvl + direction);
     m_selectableTableView.reloadCellAtLocation(m_selectableTableView.selectedColumn(), m_selectableTableView.selectedRow());
     return true;
