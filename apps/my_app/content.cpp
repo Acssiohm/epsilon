@@ -29,7 +29,7 @@ namespace My {
       return true;
     }
     if (rowIndex == k_numberOfGaugeCells && (event == Ion::Events::OK || event == Ion::Events::EXE)){
-      bool state = ( (SwitchView *) m_switch_cell.accessoryView()) -> state()
+      bool state = ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ;
       ( (SwitchView *) m_switch_cell.accessoryView()) -> setState( !state );
     }
     return false;
