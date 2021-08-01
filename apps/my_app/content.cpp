@@ -31,6 +31,8 @@ namespace My {
     if (rowIndex == k_numberOfGaugeCells && (event == Ion::Events::OK || event == Ion::Events::EXE)){
       bool state = ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ;
       ( (SwitchView *) m_switch_cell.accessoryView()) -> setState( !state );
+      m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
+      return true;
     }
     return false;
   }
