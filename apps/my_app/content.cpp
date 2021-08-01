@@ -12,10 +12,10 @@ namespace My {
 MyController::MyController(Responder * parentResponder, InputEventHandlerDelegate * inputEventHandlerDelegate) :
   ViewController(parentResponder),
   m_switch(I18n::Message::Default, KDFont::LargeFont),
-  m_selectableTableView(this),
+  m_selectableTableView(this)
 {
-  for ( int i = 0 ; i < k_numberOfGauges){
-    m_gaugeCells[i](I18n::Message::Default, KDFont::LargeFont);
+  for ( int i = 0 ; i < k_numberOfGauges; i++){
+    m_gaugeCells[i] = MessageTableCellWithGauge(I18n::Message::Default, KDFont::LargeFont);
   }
 }
 
@@ -31,22 +31,21 @@ void MyController::didBecomeFirstResponder() {
 }
 
 bool MyController::handleEvent(Ion::Events::Event event) {
-  GlobalPreferences * globalPreferences = GlobalPreferences::sharedGlobalPreferences();
   int rowIndex = selectedRow();
 
   if (rowIndex < k_numberOfGauges
    && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
     float delta = 0.1;
     float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
-    float lvl =  &m_gaugeCells[rowIndex] -> level();
-    &m_gaugeCells[rowIndex] -> setLevel(lvl + direction);
+    float lvl =  (&m_gaugeCells[rowIndex]) -> level();
+    (&m_gaugeCells[rowIndex]) -> setLevel(lvl + direction);
     m_selectableTableView.reloadCellAtLocation(m_selectableTableView.selectedColumn(), m_selectableTableView.selectedRow());
     return true;
   }
 
   if (event == Ion::Events::OK || event == Ion::Events::EXE || event == Ion::Events::Right) {
     if (rowIndex == k_numberOfGauges) {
-      bool state = m_switch->accessoryView()->state();
+      bool state = (&m_switch)->accessoryView()->state();
       m_switch->accessoryView()->setState(!state);
       
     }
@@ -98,8 +97,6 @@ int MyController::typeAtLocation(int i, int j) {
 }
 
 void MyController::willDisplayCellForIndex(HighlightCell * cell, int index) {
-  GlobalPreferences * globalPreferences = GlobalPreferences::sharedGlobalPreferences();
-  I18n::Message title = model()->childAtIndex(index)->label();
   if (index <= k_numberOfGauges) {
     MessageTableCellWithGauge * myGaugeCell = (MessageTableCellWithGauge *)cell;
     myGaugeCell->setMessage(messageAtIndex(index));
