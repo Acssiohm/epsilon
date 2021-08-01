@@ -11,7 +11,6 @@ namespace My {
 
 MyController::MyController(Responder * parentResponder, InputEventHandlerDelegate * inputEventHandlerDelegate) :
   ViewController(parentResponder),
-  m_brightnessCell(I18n::Message::Default, KDFont::LargeFont),
   m_switch(I18n::Message::Default, KDFont::LargeFont),
   m_selectableTableView(this),
 {

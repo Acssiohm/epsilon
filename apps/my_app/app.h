@@ -22,7 +22,7 @@ public:
   TELEMETRY_ID("My");
 private:
   App(Snapshot * snapshot);
-  SelectableTableView m_main;
+  MyController m_main;
 };
 
 

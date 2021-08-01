@@ -9,7 +9,7 @@ namespace My {
 
 class MyController : public ViewController, public ListViewDataSource, public SelectableTableViewDataSource {
 public:
-  MyController(Responder * parentResponder, InputEventHandlerDelegate * inputEventHandlerDelegate);
+  MyController(Responder * parentResponder, InputEventHandlerDelegate * inputEventHandlerDelegate = nullptr);
   View * view() override;
   bool handleEvent(Ion::Events::Event event) override;
   void didBecomeFirstResponder() override;

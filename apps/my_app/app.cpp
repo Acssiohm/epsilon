@@ -1,5 +1,5 @@
 #include "app.h"
-#include <apps/i18n.h>
+
 #include "my_app.h"
 
 extern "C" {
@@ -30,7 +30,8 @@ App::Descriptor * App::Snapshot::descriptor() {
 }
 
 App::App(Snapshot * snapshot) :
-  ::App(snapshot, &m_main, I18n::Message::Warning)
+  ::App(snapshot, &m_main, I18n::Message::Warning),
+  m_main(&m_modalViewController)
 {
 }
 
