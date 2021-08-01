@@ -56,7 +56,10 @@ namespace My {
     return offsetY / rowHeight(0);
   }
   HighlightCell * MyController::reusableCell(int index, int type) {
-    return &m_gaugeCells[index];
+    if (type == 0){
+      return &m_gaugeCells[index];
+    }
+    return &m_switch_cell;
   }
   int MyController::reusableCellCount(int type) {
     if (type == 0 ){
