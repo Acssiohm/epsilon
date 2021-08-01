@@ -26,7 +26,7 @@ public:
 private:
 	I18n::Message messageAtIndex(int index);
 
-	constexpr int k_numberOfGauges = 3
+	constexpr static int k_numberOfGauges = 3;
   MessageTableCellWithGauge m_gaugeCells[k_numberOfGauges];
   MessageTableCellWithSwitch m_switch;
   SelectableTableView m_selectableTableView;
