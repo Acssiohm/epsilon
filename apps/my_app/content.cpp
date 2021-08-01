@@ -14,30 +14,26 @@ namespace My {
       m_gaugeCells[i].setMessageFont(KDFont::LargeFont);
     }
   }
-
-bool MyController::handleEvent(Ion::Events::Event event) {
-  int rowIndex = selectedRow();
-
-  if (rowIndex < k_numberOfGauges
-   && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
-    float delta = 0.1;
-    float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
-    float lvl =  ((GaugeView * )((&m_gaugeCells[rowIndex]) -> accessoryView())) -> level();
-    (&m_gaugeCells[rowIndex]) -> accessoryView()-> setLevel(lvl + direction);
-    m_table.reloadCellAtLocation(m_selectableTableView.selectedColumn(), m_selectableTableView.selectedRow());
-    return true;
-  }
-  return false;
-}
   View * MyController::view() {
     return &m_table;
   }
-
+  bool MyController::handleEvent(Ion::Events::Event event){
+    int rowIndex = selectedRow();
+    if ((event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
+      float delta = 0.1;
+      float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
+      float lvl = m_gaugeCells[rowIndex].accessoryView() -> level();
+      m_gaugeCells[rowIndex].accessoryView() -> setLevel(lvl + direction);
+      m_selectableTableView.reloadCellAtLocation(m_selectableTableView.selectedColumn(), m_selectableTableView.selectedRow());
+      return true;
+    }
+    return false;
+  }
   void MyController::willDisplayCellForIndex(HighlightCell * cell, int index) {
     MessageTableCellWithGauge * myGaugeCell = (MessageTableCellWithGauge *)cell;
     myGaugeCell->setMessage(messageAtIndex(index));
   }
-  int MyController::numberOfRows() {
+  int MyController::numberOfRows() const {
     return k_numberOfGaugeCells;
   }
   KDCoordinate MyController::rowHeight(int j) {
@@ -66,7 +62,7 @@ bool MyController::handleEvent(Ion::Events::Event event) {
   }
 
   I18n::Message MyController::messageAtIndex(int index){
-    I18n::Message msgs[] = {I18n::Message::MSG1, I18n::Message::MSG2, I18n::Message::MSG3, I18n::Message::MSG4}
+    I18n::Message msgs[4] = {I18n::Message::MSG1, I18n::Message::MSG2, I18n::Message::MSG3, I18n::Message::MSG4};
     return msgs[index];
   }
 }
