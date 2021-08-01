@@ -29,7 +29,7 @@ private:
 	I18n::Message messageAtIndex(int index);
 
 	constexpr static int k_numberOfGaugeCells = 3;
-	MessageTableCellWithGauge gaugeCells[k_numberOfGaugeCells];
+	MessageTableCellWithGauge m_gaugeCells[k_numberOfGaugeCells];
 	SelectableTableView m_table;
 };
 

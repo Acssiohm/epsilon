@@ -11,7 +11,7 @@ namespace My {
   ViewController(parentResponder),
   m_table(this) {
     for (int i = 0; i < k_numberOfGaugeCells; i++){
-      gaugeCells[i].setMessageFont(KDFont::LargeFont);
+      m_gaugeCells[i].setMessageFont(KDFont::LargeFont);
     }
   }
 
@@ -24,7 +24,7 @@ bool MyController::handleEvent(Ion::Events::Event event) {
     float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
     float lvl =  ((GaugeView * )((&m_gaugeCells[rowIndex]) -> accessoryView())) -> level();
     (&m_gaugeCells[rowIndex]) -> accessoryView()-> setLevel(lvl + direction);
-    m_selectableTableView.reloadCellAtLocation(m_selectableTableView.selectedColumn(), m_selectableTableView.selectedRow());
+    m_table.reloadCellAtLocation(m_selectableTableView.selectedColumn(), m_selectableTableView.selectedRow());
     return true;
   }
   return false;
@@ -32,17 +32,7 @@ bool MyController::handleEvent(Ion::Events::Event event) {
   View * MyController::view() {
     return &m_table;
   }
-  bool MyController::handleEvent(Ion::Events::Event event){
-    int rowIndex = selectedRow();
-    if ((event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
-      float delta = 0.1;
-      float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
-      float lvl = gaugeCells[rowIndex].accessoryView() -> level();
-      gaugeCells[rowIndex].accessoryView() -> setLevel(lvl + direction);
-      m_selectableTableView.reloadCellAtLocation(m_selectableTableView.selectedColumn(), m_selectableTableView.selectedRow());
-      return true;
-    }
-  }
+
   void MyController::willDisplayCellForIndex(HighlightCell * cell, int index) {
     MessageTableCellWithGauge * myGaugeCell = (MessageTableCellWithGauge *)cell;
     myGaugeCell->setMessage(messageAtIndex(index));
@@ -60,7 +50,7 @@ bool MyController::handleEvent(Ion::Events::Event event) {
     return offsetY / rowHeight(0);
   }
   HighlightCell * MyController::reusableCell(int index, int type) {
-    return gaugeCells[index];
+    return m_gaugeCells[index];
   }
   int MyController::reusableCellCount(int type) {
     return k_numberOfGaugeCells;
