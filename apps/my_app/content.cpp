@@ -9,7 +9,7 @@ using namespace Shared;
 namespace My {
 
 
-MainController::MainController(Responder * parentResponder, InputEventHandlerDelegate * inputEventHandlerDelegate) :
+MyController::MyController(Responder * parentResponder, InputEventHandlerDelegate * inputEventHandlerDelegate) :
   ViewController(parentResponder),
   m_brightnessCell(I18n::Message::Default, KDFont::LargeFont),
   m_switch(I18n::Message::Default, KDFont::LargeFont),
@@ -20,18 +20,18 @@ MainController::MainController(Responder * parentResponder, InputEventHandlerDel
   }
 }
 
-View * MainController::view() {
+View * MyController::view() {
   return &m_selectableTableView;
 }
 
-void MainController::didBecomeFirstResponder() {
+void MyController::didBecomeFirstResponder() {
   if (selectedRow() < 0) {
     selectCellAtLocation(0, 0);
   }
   Container::activeApp()->setFirstResponder(&m_selectableTableView);
 }
 
-bool MainController::handleEvent(Ion::Events::Event event) {
+bool MyController::handleEvent(Ion::Events::Event event) {
   GlobalPreferences * globalPreferences = GlobalPreferences::sharedGlobalPreferences();
   int rowIndex = selectedRow();
 
@@ -58,24 +58,24 @@ bool MainController::handleEvent(Ion::Events::Event event) {
   return false;
 }
 
-int MainController::numberOfRows() const {
+int MyController::numberOfRows() const {
   return k_numberOfGauges + 1;
 };
 
-KDCoordinate MainController::rowHeight(int j) {
+KDCoordinate MyController::rowHeight(int j) {
   return Metric::ParameterCellHeight;
 }
 
-KDCoordinate MainController::cumulatedHeightFromIndex(int j) {
+KDCoordinate MyController::cumulatedHeightFromIndex(int j) {
   KDCoordinate height = j * rowHeight(0);
   return height;
 }
 
-int MainController::indexFromCumulatedHeight(KDCoordinate offsetY) {
+int MyController::indexFromCumulatedHeight(KDCoordinate offsetY) {
   return offsetY/rowHeight(0);
 }
 
-HighlightCell * MainController::reusableCell(int index, int type) {
+HighlightCell * MyController::reusableCell(int index, int type) {
   assert(index >= 0);
   if (type == 0) {
     return &m_gaugeCells[index];
@@ -84,21 +84,21 @@ HighlightCell * MainController::reusableCell(int index, int type) {
   
 }
 
-int MainController::reusableCellCount(int type) {
+int MyController::reusableCellCount(int type) {
   if (type == 0) {
     return k_numberOfGauges;
   }
   return 1;
 }
 
-int MainController::typeAtLocation(int i, int j) {
+int MyController::typeAtLocation(int i, int j) {
   if (j <= k_numberOfGauges){
     return 0;
   }
   return 1;
 }
 
-void MainController::willDisplayCellForIndex(HighlightCell * cell, int index) {
+void MyController::willDisplayCellForIndex(HighlightCell * cell, int index) {
   GlobalPreferences * globalPreferences = GlobalPreferences::sharedGlobalPreferences();
   I18n::Message title = model()->childAtIndex(index)->label();
   if (index <= k_numberOfGauges) {
@@ -116,7 +116,7 @@ void MainController::willDisplayCellForIndex(HighlightCell * cell, int index) {
 
 }
 
-void MainController::viewWillAppear() {
+void MyController::viewWillAppear() {
   ViewController::viewWillAppear();
   m_selectableTableView.reloadData();
 }
