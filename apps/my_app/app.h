@@ -1,7 +1,7 @@
 #ifndef MY_APP_H
 #define MY_APP_H
 
-#include "./shared_app.h"
+#include "./shared/shared_app.h"
 
 
 namespace My {
