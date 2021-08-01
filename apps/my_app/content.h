@@ -16,7 +16,7 @@ class MyController : public ViewController, public ListViewDataSource, public Se
 	// KDCoordinate cellWidth() override;
 	bool handleEvent(Ion::Events::Event event) override;
 	void willDisplayCellForIndex(HighlightCell * cell, int index) override;
-	int numberOfRows() override; 
+	int numberOfRows() const override; 
 	KDCoordinate rowHeight(int j) override;
 	KDCoordinate cumulatedHeightFromIndex(int j) override;
 	int indexFromCumulatedHeight(KDCoordinate offsetY) override;
