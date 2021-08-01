@@ -8,6 +8,6 @@ app_my_src = $(addprefix apps/my_app/,\
 app_my_src += $(app_my_test_src)
 apps_src += $(app_my_src)
 
-i18n_files += $(call i18n_for_locale,my_app,universal)
+i18n_files += $(call i18n_for_locale,base,universal)
 
 $(eval $(call depends_on_image,apps/my_app/app.cpp,apps/my_app/my_app.png))
