@@ -8,29 +8,29 @@
 namespace My {
 
 class MyController : public ViewController, public ListViewDataSource, public SelectableTableViewDataSource {
-public:
-  MyController(Responder * parentResponder, InputEventHandlerDelegate * inputEventHandlerDelegate = nullptr);
-  View * view() override;
-  bool handleEvent(Ion::Events::Event event) override;
-  void didBecomeFirstResponder() override;
-  int numberOfRows() const override;
-  KDCoordinate rowHeight(int j) override;
-  KDCoordinate cumulatedHeightFromIndex(int j) override;
-  int indexFromCumulatedHeight(KDCoordinate offsetY) override;
-  HighlightCell * reusableCell(int index, int type) override;
+	
+	public:
+	MyController(Responder * parentResponder);
+	
+	View * view() override;
+	// KDCoordinate cellWidth() override;
+	bool handleEvent(Ion::Events::Event event) override;
+	void willDisplayCellForIndex(HighlightCell * cell, int index) override;
+	int numberOfRows() override; 
+	KDCoordinate rowHeight(int j) override;
+	KDCoordinate cumulatedHeightFromIndex(int j) override;
+	int indexFromCumulatedHeight(KDCoordinate offsetY) override;
+	HighlightCell * reusableCell(int index, int type) override;
   int reusableCellCount(int type) override;
   int typeAtLocation(int i, int j) override;
-  void willDisplayCellForIndex(HighlightCell * cell, int index) override;
-  void viewWillAppear() override;
-  TELEMETRY_ID("");
+  void didBecomeFirstResponder() override; // ?
+
 private:
 	I18n::Message messageAtIndex(int index);
 
-	constexpr static int k_numberOfGauges = 3;
-  MessageTableCellWithGauge m_gaugeCells[k_numberOfGauges];
-  MessageTableCellWithSwitch m_switch;
-  SelectableTableView m_selectableTableView;
-
+	constexpr static int k_numberOfGaugeCells = 3;
+	MessageTableCellWithGauge gaugeCells[k_numberOfGaugeCells];
+	SelectableTableView m_table;
 };
 
 }
