@@ -24,7 +24,7 @@ namespace My {
       float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
       float lvl = ( (GaugeView *) m_gaugeCells[rowIndex].accessoryView() ) -> level();
       ( (GaugeView *) m_gaugeCells[rowIndex].accessoryView() ) -> setLevel(lvl + direction);
-      m_table.reloadCellAtLocation(m_selectableTableView.selectedColumn(), m_selectableTableView.selectedRow());
+      m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
       return true;
     }
     return false;
