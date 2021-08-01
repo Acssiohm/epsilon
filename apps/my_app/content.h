@@ -2,13 +2,8 @@
 #define SETTINGS_MAIN_CONTROLLER_H
 
 #include <escher.h>
-#include <apps/shared/settings_message_tree.h>
-#include "message_table_cell_with_gauge_with_separator.h"
-#include "sub_menu/about_controller.h"
-#include "sub_menu/display_mode_controller.h"
-#include "sub_menu/exam_mode_controller.h"
-#include "sub_menu/localization_controller.h"
-#include "sub_menu/preferences_controller.h"
+#include <apps/i18n.h>
+
 
 namespace My {
 
@@ -30,7 +25,7 @@ public:
   TELEMETRY_ID("");
 private:
 	I18n::Message messageAtIndex(int index);
-	
+
 	constexpr k_numberOfGauges = 3
   MessageTableCellWithGauge m_gaugeCells[k_numberOfGauges];
   MessageTableCellWithSwitch m_switch;

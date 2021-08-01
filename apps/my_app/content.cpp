@@ -1,12 +1,12 @@
-#include "main_controller.h"
-#include "../global_preferences.h"
+#include "content.h"
+
 #include <apps/i18n.h>
 #include <assert.h>
 
 using namespace Poincare;
 using namespace Shared;
 
-namespace Settings {
+namespace My {
 
 
 MainController::MainController(Responder * parentResponder, InputEventHandlerDelegate * inputEventHandlerDelegate) :
