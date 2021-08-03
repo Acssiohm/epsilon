@@ -30,7 +30,7 @@ private:
 	I18n::Message messageAtIndex(int index);
 
 	constexpr static int k_numberOfGaugeCells = 3;
-	constexpr static KDColor k_colorOfGaugeCells[k_numberOfColors] = {Palette::Red, Palette::Green, Palette::Blue};
+	constexpr static KDColor k_colorOfGaugeCells[k_numberOfGaugeCells] = {Palette::Red, Palette::Green, Palette::Blue};
 	MessageTableCellWithCustomGauge m_gaugeCells[k_numberOfGaugeCells];
 	MessageTableCellWithSwitch m_switch_cell;
 	SelectableTableView m_table;
