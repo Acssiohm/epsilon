@@ -71,7 +71,11 @@ bool Controller::handleEvent(Ion::Events::Event event) {
     }
     return true;
   }
-
+  if (event == Ion::Events::One )
+  {
+    AppsContainer * container = AppsContainer::sharedAppsContainer();
+    container->switchTo(container->appSnapshotAtIndex(PermutedAppSnapshotIndex(1)));
+  }
   if (event == Ion::Events::Home || event == Ion::Events::Back) {
     return m_view.selectableTableView()->selectCellAtLocation(0, 0);
   }
