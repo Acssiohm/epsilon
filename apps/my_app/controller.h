@@ -3,7 +3,7 @@
 
 #include <escher.h>
 #include <apps/i18n.h>
-
+#include "custom_gauge_view.h"
 
 namespace My {
 

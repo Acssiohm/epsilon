@@ -1,5 +1,4 @@
 #include "controller.h"
-#include "custom_gauge_view.h"
 #include <apps/i18n.h>
 #include <assert.h>
 
