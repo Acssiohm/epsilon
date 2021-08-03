@@ -81,6 +81,9 @@ App::Snapshot * AppsContainer::onBoardingAppSnapshot() {
 App::Snapshot * AppsContainer::usbConnectedAppSnapshot() {
   return &m_usbConnectedSnapshot;
 }
+App::Snapshot * mySnapshot(){
+  return &m_mySnapshot;
+}
 
 void AppsContainer::reset() {
   // Empty storage (delete functions, variables, python scripts)

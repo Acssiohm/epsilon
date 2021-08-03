@@ -26,6 +26,7 @@ private:
     OnBoarding::App m_onBoardingApp;
     HardwareTest::App m_hardwareTestApp;
     USB::App m_usbApp;
+    My::App m_myApp;
   };
   Apps m_apps;
   APPS_CONTAINER_SNAPSHOT_DECLARATIONS
