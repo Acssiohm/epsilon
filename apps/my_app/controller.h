@@ -11,7 +11,7 @@ class MyController : public ViewController, public ListViewDataSource, public Se
 	
 public:
 	MyController(Responder * parentResponder);
-	
+	const char * title() { return "Nice"; }
 	View * view() override;
 	// KDCoordinate cellWidth() override;
 	bool handleEvent(Ion::Events::Event event) override;
