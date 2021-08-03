@@ -12,7 +12,7 @@ class MyController : public ViewController, public ListViewDataSource, public Se
 	
 public:
 	MyController(Responder * parentResponder);
-	const char * title() { return I18n::translate(I18n::Message::LEDTab); }
+	const char * title() { return I18n::translate(I18n::Message::MSG1); }
 	View * view() override;
 	// KDCoordinate cellWidth() override;
 	bool handleEvent(Ion::Events::Event event) override;
