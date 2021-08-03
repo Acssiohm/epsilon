@@ -1,4 +1,4 @@
-#include "content.h"
+#include "controller.h"
 
 #include <apps/i18n.h>
 #include <assert.h>

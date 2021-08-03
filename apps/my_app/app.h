@@ -14,7 +14,7 @@ public:
     I18n::Message upperName() override;
     const Image * icon() override;
   };
-  class Snapshot : public ::SharedApp::Snapshot {
+  class Snapshot : public ::SharedApp::Snapshot, public TableViewDataSource {
   public:
     App * unpack(Container * container) override;
     Descriptor * descriptor() override;
@@ -22,7 +22,8 @@ public:
   TELEMETRY_ID("My");
 private:
   App(Snapshot * snapshot);
-  MyController m_main;
+  MyController m_tab1;
+  TabViewController m_main;
 };
 
 

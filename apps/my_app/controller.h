@@ -9,7 +9,7 @@ namespace My {
 
 class MyController : public ViewController, public ListViewDataSource, public SelectableTableViewDataSource {
 	
-	public:
+public:
 	MyController(Responder * parentResponder);
 	
 	View * view() override;
