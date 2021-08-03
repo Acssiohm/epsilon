@@ -5,6 +5,7 @@ app_my_src = $(addprefix apps/my_app/,\
   app.cpp \
   controller.cpp \
   custom_gauge_view.cpp \
+  message_table_cell_with_custom_gauge.cpp \
 )
 
 apps_src += $(app_my_src)

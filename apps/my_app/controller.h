@@ -3,7 +3,8 @@
 
 #include <escher.h>
 #include <apps/i18n.h>
-#include "custom_gauge_view.h"
+// #include "custom_gauge_view.h"
+#include "message_table_cell_with_custom_gauge.h"
 
 namespace My {
 
@@ -29,8 +30,7 @@ private:
 	I18n::Message messageAtIndex(int index);
 
 	constexpr static int k_numberOfGaugeCells = 3;
-	MessageTableCellWithGauge m_gaugeCells[k_numberOfGaugeCells];
-	CustomGaugeView m_customGauges[k_numberOfGaugeCells];
+	MessageTableCellWithCustomGauge m_gaugeCells[k_numberOfGaugeCells];
 	MessageTableCellWithSwitch m_switch_cell;
 	SelectableTableView m_table;
 };
