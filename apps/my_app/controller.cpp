@@ -23,7 +23,7 @@ namespace My {
   }
   bool MyController::handleEvent(Ion::Events::Event event){
     int rowIndex = selectedRow();
-    if (rowIndex < k_numberOfGaugeCells && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
+    if ( typeAtLocation(0, rowIndex) == 0 && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
       float delta = 0.1;
       float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
       float lvl = ( (GaugeView *) m_gaugeCells[rowIndex].accessoryView() ) -> level();
@@ -31,7 +31,7 @@ namespace My {
       m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
       return true;
     }
-    if (rowIndex == k_numberOfGaugeCells && (event == Ion::Events::OK || event == Ion::Events::EXE)){
+    if (rowIndex == k_numberOfGaugeCells - 1 && (event == Ion::Events::OK || event == Ion::Events::EXE)){
       bool state = ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ;
       ( (SwitchView *) m_switch_cell.accessoryView()) -> setState( !state );
       m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
@@ -73,7 +73,7 @@ namespace My {
     return 1;
   }
   int MyController::typeAtLocation(int i, int j) {
-    if (j < k_numberOfGaugeCells){
+    if (j < k_numberOfGaugeCells - 1 || j == k_numberOfGaugeCells ){
       return 0;
     }
     return 1;
@@ -86,7 +86,7 @@ namespace My {
   }
 
   I18n::Message MyController::messageAtIndex(int index){
-    I18n::Message msgs[4] = {I18n::Message::MSG1, I18n::Message::MSG2, I18n::Message::MSG3, I18n::Message::MSG4};
+    I18n::Message msgs[4] = {I18n::Message::MSG1, I18n::Message::MSG2, I18n::Message::MSG3, I18n::Message::MSG4, I18n::Message::MSG4 };
     return msgs[index];
   }
 }
