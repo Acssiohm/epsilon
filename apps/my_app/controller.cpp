@@ -11,7 +11,7 @@ namespace My {
   m_table(this) {
     m_switch_cell.setMessageFont(KDFont::LargeFont);
     for (int i = 0; i < k_numberOfGaugeCells; i++){
-      m_gaugeCells[i].accessoryView() = &m_customGauges[i];
+      m_gaugeCells[i].accessoryView() = m_customGauges[i];
       m_gaugeCells[i].setMessageFont(KDFont::LargeFont);
     }
   }
