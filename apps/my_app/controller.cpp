@@ -13,7 +13,7 @@ namespace My {
     m_switch_cell.setMessageFont(KDFont::LargeFont);
     for (int i = 0; i < k_numberOfGaugeCells; i++){
       m_gaugeCells[i].setMessageFont(KDFont::LargeFont);
-      ( (CustomGaugeView * ) m_gaugeCells[i] -> accessoryView()  ) -> setColor(k_colorOfGaugeCells[i]);
+      ( (CustomGaugeView * ) m_gaugeCells[i].accessoryView()  ) -> setColor(k_colorOfGaugeCells[i]);
     }
   }
   View * MyController::view() {
