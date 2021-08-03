@@ -87,7 +87,7 @@ namespace My {
   }
 
   I18n::Message MyController::messageAtIndex(int index){
-    I18n::Message msgs[] = {I18n::Message::MSG1, I18n::Message::MSG2, I18n::Message::MSG3, I18n::Message::MSG4, I18n::Message::MSG4 };
+    I18n::Message msgs[] = {I18n::Message::MSG1, I18n::Message::MSG2, I18n::Message::MSG3, I18n::Message::MSG4, I18n::Message::MSG45 };
     return msgs[index];
   }
 }
