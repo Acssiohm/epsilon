@@ -40,7 +40,7 @@ namespace My {
     return false;
   }
   void MyController::willDisplayCellForIndex(HighlightCell * cell, int index) {
-    if (index == k_numberOfGaugeCells){
+    if (index == k_numberOfGaugeCells - 1){
       MessageTableCellWithSwitch * mySwitchCell = (MessageTableCellWithSwitch *)cell;
       mySwitchCell -> setMessage(messageAtIndex(index));  
       return ;
