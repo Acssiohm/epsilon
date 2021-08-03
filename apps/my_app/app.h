@@ -1,6 +1,6 @@
 #ifndef MY_APP_H
 #define MY_APP_H
-#include "content.h"
+#include "controller.h"
 #include "../shared/shared_app.h"
 
 
