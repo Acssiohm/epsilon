@@ -31,7 +31,8 @@ AppsContainer::AppsContainer() :
   m_homeSnapshot(),
   m_onBoardingSnapshot(),
   m_hardwareTestSnapshot(),
-  m_usbConnectedSnapshot()
+  m_usbConnectedSnapshot(),
+  m_mySnapshot()
 {
   m_emptyBatteryWindow.setFrame(KDRect(0, 0, Ion::Display::Width, Ion::Display::Height), false);
 #if __EMSCRIPTEN__
