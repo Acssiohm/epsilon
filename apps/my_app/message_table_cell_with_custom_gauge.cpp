@@ -1,4 +1,4 @@
-#include <escher/message_table_cell_with_custom_gauge.h>
+#include "message_table_cell_with_custom_gauge.h"
 #include <escher/palette.h>
 
 MessageTableCellWithCustomGauge::MessageTableCellWithCustomGauge(I18n::Message message, const KDFont * font) :
