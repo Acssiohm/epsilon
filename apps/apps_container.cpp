@@ -82,7 +82,7 @@ App::Snapshot * AppsContainer::onBoardingAppSnapshot() {
 App::Snapshot * AppsContainer::usbConnectedAppSnapshot() {
   return &m_usbConnectedSnapshot;
 }
-App::Snapshot * mySnapshot(){
+App::Snapshot * AppsContainer::mySnapshot(){
   return &m_mySnapshot;
 }
 
