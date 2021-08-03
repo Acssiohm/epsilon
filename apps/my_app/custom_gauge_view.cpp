@@ -13,7 +13,7 @@ void CustomGaugeView::drawRect(KDContext * ctx, KDRect rect) const {
   KDCoordinate height =  bounds().height();
   KDColor gaugeIndicatorWorkingBuffer[GaugeView::k_indicatorDiameter*GaugeView::k_indicatorDiameter];
 
-  ctx->fillRect(KDRect(k_indicatorDiameter/2, (height-k_thickness)/2, width*m_level, k_thickness), color);
+  ctx->fillRect(KDRect(k_indicatorDiameter/2, (height-k_thickness)/2, width*m_level, k_thickness), m_color);
   ctx->fillRect(KDRect(k_indicatorDiameter/2+width*m_level, (height-k_thickness)/2, width*(1.0f-m_level), k_thickness), Palette::GrayDark);
   KDRect frame(width*m_level, (height-k_indicatorDiameter)/2, k_indicatorDiameter, k_indicatorDiameter);
   ctx->blendRectWithMask(frame, m_color, (const uint8_t *)gaugeIndicatorMask, gaugeIndicatorWorkingBuffer);
