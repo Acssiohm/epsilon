@@ -6,7 +6,7 @@
 
 class MessageTableCellWithCustomGauge : public MessageTableCell {
 public:
-  MessageTableCellWithGauge(I18n::Message message = (I18n::Message)0, const KDFont * font = KDFont::SmallFont);
+  MessageTableCellWithCustomGauge(I18n::Message message = (I18n::Message)0, const KDFont * font = KDFont::SmallFont);
   View * accessoryView() const override;
   void setHighlighted(bool highlight) override;
 private:
