@@ -1,7 +1,7 @@
 #ifndef CUSTOM_GAUGE_VIEW
 #define CUSTOM_GAUGE_VIEW
 
-#include "../../escher/src/gauge_view.cpp"
+#include <escher.h>
 
 class CustomGaugeView : public GaugeView {
 public:
