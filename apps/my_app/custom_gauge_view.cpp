@@ -15,7 +15,7 @@ const uint8_t gaugeIndicatorMask[GaugeView::k_indicatorDiameter][GaugeView::k_in
 
 CustomGaugeView::CustomGaugeView(): 
 	GaugeView(),
-	m_color(Palette::Red)
+	m_color(Palette::YellowDark)
 {	
 }
 
