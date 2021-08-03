@@ -23,11 +23,12 @@ namespace My {
   }
   bool MyController::handleEvent(Ion::Events::Event event){
     int rowIndex = selectedRow();
-    if ( typeAtLocation(0, rowIndex) == 0 && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
+    if ( rowIndex != k_numberOfGaugeCells - 1 && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
+      int gaugeIndex = rowIndex >= k_numberOfGaugeCells ? rowIndex - 1 : rowIndex; 
       float delta = 0.1;
       float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
-      float lvl = ( (GaugeView *) m_gaugeCells[rowIndex].accessoryView() ) -> level();
-      ( (GaugeView *) m_gaugeCells[rowIndex].accessoryView() ) -> setLevel(lvl + direction);
+      float lvl = ( (GaugeView *) m_gaugeCells[gaugeIndex].accessoryView() ) -> level();
+      ( (GaugeView *) m_gaugeCells[gaugeIndex].accessoryView() ) -> setLevel(lvl + direction);
       m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
       return true;
     }
