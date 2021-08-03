@@ -1,5 +1,5 @@
 #include "controller.h"
-
+#include "custom_gauge_view.h"
 #include <apps/i18n.h>
 #include <assert.h>
 
@@ -12,6 +12,7 @@ namespace My {
   m_table(this) {
     m_switch_cell.setMessageFont(KDFont::LargeFont);
     for (int i = 0; i < k_numberOfGaugeCells; i++){
+      m_gaugeCells[i].accessoryView() = &CustomGaugeView();
       m_gaugeCells[i].setMessageFont(KDFont::LargeFont);
     }
   }
