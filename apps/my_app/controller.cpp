@@ -38,7 +38,7 @@ namespace My {
       float b = ( (GaugeView *) m_gaugeCells[2].accessoryView() ) -> level() * (float)0xFF;
       KDColor clr = KDColor::RGB888(r, g, b);
       Ion::LED::setColor(clr);
-      ( (CustomGaugeView * ) m_gaugeCells[2].accessoryView()  ) -> setColor(clr);
+      ( (CustomGaugeView * ) m_gaugeCells[3].accessoryView()  ) -> setColor(clr);
       return true;
     }
     if (rowIndex == k_numberOfGaugeCells - 1 && (event == Ion::Events::OK || event == Ion::Events::EXE)){
