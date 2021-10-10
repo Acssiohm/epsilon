@@ -1,5 +1,6 @@
 #include "controller.h"
-
+#include <kandinsky.h>
+#include <ion.h>
 #include <apps/i18n.h>
 #include <assert.h>
 
@@ -7,6 +8,7 @@ using namespace Poincare;
 using namespace Shared;
 
 namespace My {
+
   MyController::MyController(Responder * parentResponder) : 
   ViewController(parentResponder),
   m_table(this) {
@@ -21,6 +23,7 @@ namespace My {
   View * MyController::view() {
     return &m_table;
   }
+
   bool MyController::handleEvent(Ion::Events::Event event){
     int rowIndex = selectedRow();
     if ( rowIndex != k_numberOfGaugeCells - 1 && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
@@ -30,6 +33,12 @@ namespace My {
       float lvl = ( (GaugeView *) m_gaugeCells[gaugeIndex].accessoryView() ) -> level();
       ( (GaugeView *) m_gaugeCells[gaugeIndex].accessoryView() ) -> setLevel(lvl + direction);
       m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
+      float r = ( (GaugeView *) m_gaugeCells[0].accessoryView() ) -> level() * (float)0xFF;
+      float g = ( (GaugeView *) m_gaugeCells[1].accessoryView() ) -> level() * (float)0xFF;
+      float b = ( (GaugeView *) m_gaugeCells[2].accessoryView() ) -> level() * (float)0xFF;
+      KDColor clr = KDColor::RGB888(r, g, b);
+      Ion::LED::setColor(clr);
+      ( (CustomGaugeView * ) m_gaugeCells[2].accessoryView()  ) -> setColor(clr);
       return true;
     }
     if (rowIndex == k_numberOfGaugeCells - 1 && (event == Ion::Events::OK || event == Ion::Events::EXE)){
