@@ -22,9 +22,10 @@ public:
 	KDCoordinate cumulatedHeightFromIndex(int j) override;
 	int indexFromCumulatedHeight(KDCoordinate offsetY) override;
 	HighlightCell * reusableCell(int index, int type) override;
-  int reusableCellCount(int type) override;
-  int typeAtLocation(int i, int j) override;
-  void didBecomeFirstResponder() override; // ?
+	int reusableCellCount(int type) override;
+	int typeAtLocation(int i, int j) override;
+	void didBecomeFirstResponder() override; // ?
+	KDColor gaugesSelectedColor();
 
 private:
 	I18n::Message messageAtIndex(int index);

@@ -23,22 +23,27 @@ namespace My {
   View * MyController::view() {
     return &m_table;
   }
-
+  KDColor gaugesSelectedColor(){
+    uint8_t r = ( (GaugeView *) m_gaugeCells[0].accessoryView() ) -> level() * 0xFF;
+    uint8_t g = ( (GaugeView *) m_gaugeCells[1].accessoryView() ) -> level() * 0xFF;
+    uint8_t b = ( (GaugeView *) m_gaugeCells[2].accessoryView() ) -> level() * 0xFF;
+    return KDColor::RGB888(r, g, b);    
+  }
   bool MyController::handleEvent(Ion::Events::Event event){
     int rowIndex = selectedRow();
     if ( rowIndex != k_numberOfGaugeCells - 1 && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
       int gaugeIndex = rowIndex >= k_numberOfGaugeCells ? rowIndex - 1 : rowIndex; 
-      float delta = 0.1;
+      float delta = 0.02;
       float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
       float lvl = ( (GaugeView *) m_gaugeCells[gaugeIndex].accessoryView() ) -> level();
+      
       ( (GaugeView *) m_gaugeCells[gaugeIndex].accessoryView() ) -> setLevel(lvl + direction);
       m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
-      float r = ( (GaugeView *) m_gaugeCells[0].accessoryView() ) -> level() * (float)0xFF;
-      float g = ( (GaugeView *) m_gaugeCells[1].accessoryView() ) -> level() * (float)0xFF;
-      float b = ( (GaugeView *) m_gaugeCells[2].accessoryView() ) -> level() * (float)0xFF;
-      KDColor clr = KDColor::RGB888(r, g, b);
+      
+      KDColor clr = gaugesSelectedColor();
       Ion::LED::setColor(clr);
       ( (CustomGaugeView * ) m_gaugeCells[3].accessoryView()  ) -> setColor(clr);
+
       return true;
     }
     if (rowIndex == k_numberOfGaugeCells - 1 && (event == Ion::Events::OK || event == Ion::Events::EXE)){
