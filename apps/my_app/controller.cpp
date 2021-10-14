@@ -20,25 +20,33 @@ namespace My {
     ( (CustomGaugeView * ) m_gaugeCells[1].accessoryView()  ) -> setColor(Palette::Green);
     ( (CustomGaugeView * ) m_gaugeCells[2].accessoryView()  ) -> setColor(Palette::Blue);
   }
+
   View * MyController::view() {
     return &m_table;
   }
+
   KDColor MyController::gaugesSelectedColor(){
     uint8_t r = ( (GaugeView *) m_gaugeCells[0].accessoryView() ) -> level() * 0xFF;
     uint8_t g = ( (GaugeView *) m_gaugeCells[1].accessoryView() ) -> level() * 0xFF;
     uint8_t b = ( (GaugeView *) m_gaugeCells[2].accessoryView() ) -> level() * 0xFF;
     return KDColor::RGB888(r, g, b);    
   }
+  void MyController::updateGaugeLevel(int index, Ion::Events::Event event){
+    float delta = (event == Ion::Events::Right || event == Ion::Events::Left) ? 0.1 : 0.02;
+    float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
+    float lvl = ( (GaugeView *) m_gaugeCells[index].accessoryView() ) -> level();
+    ( (GaugeView *) m_gaugeCells[index].accessoryView() ) -> setLevel(lvl + direction);
+    m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
+  }
+
   bool MyController::handleEvent(Ion::Events::Event event){
     int rowIndex = selectedRow();
     if ( rowIndex != k_numberOfGaugeCells - 1 && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
-      int gaugeIndex = rowIndex >= k_numberOfGaugeCells ? rowIndex - 1 : rowIndex; 
-      float delta = 0.02;
-      float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
-      float lvl = ( (GaugeView *) m_gaugeCells[gaugeIndex].accessoryView() ) -> level();
       
-      ( (GaugeView *) m_gaugeCells[gaugeIndex].accessoryView() ) -> setLevel(lvl + direction);
-      m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
+      int gaugeIndex = rowIndex >= k_numberOfGaugeCells ? rowIndex - 1 : rowIndex; 
+     
+      updateGaugeLevel(gaugeIndex, event);
+      
       
       KDColor clr = gaugesSelectedColor();
       Ion::LED::setColor(clr);
@@ -49,11 +57,15 @@ namespace My {
     if (rowIndex == k_numberOfGaugeCells - 1 && (event == Ion::Events::OK || event == Ion::Events::EXE)){
       bool state = ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ;
       ( (SwitchView *) m_switch_cell.accessoryView()) -> setState( !state );
+      if (!state){
+        Ion::setBlinking()
+      }
       m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
       return true;
     }
     return false;
   }
+
   void MyController::willDisplayCellForIndex(HighlightCell * cell, int index) {
     if (index == k_numberOfGaugeCells - 1){
       MessageTableCellWithSwitch * mySwitchCell = (MessageTableCellWithSwitch *)cell;

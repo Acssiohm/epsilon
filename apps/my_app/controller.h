@@ -26,6 +26,7 @@ public:
 	int typeAtLocation(int i, int j) override;
 	void didBecomeFirstResponder() override; // ?
 	KDColor gaugesSelectedColor();
+	void updateGaugeLevel(int index, Ion::Events::Event event);
 
 private:
 	I18n::Message messageAtIndex(int index);
