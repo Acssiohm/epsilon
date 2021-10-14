@@ -27,7 +27,7 @@ public:
 	void didBecomeFirstResponder() override; // ?
 	KDColor gaugesSelectedColor();
 	void updateGaugeLevel(int index, Ion::Events::Event event);
-
+	int gaugesSelectedPeriod();
 private:
 	I18n::Message messageAtIndex(int index);
 

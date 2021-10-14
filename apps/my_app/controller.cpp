@@ -31,6 +31,9 @@ namespace My {
     uint8_t b = ( (GaugeView *) m_gaugeCells[2].accessoryView() ) -> level() * 0xFF;
     return KDColor::RGB888(r, g, b);    
   }
+  int MyController::gaugesSelectedPeriod(){
+     return ( (GaugeView *) m_gaugeCells[3].accessoryView() ) -> level() * 0xFFFF;
+  }
   void MyController::updateGaugeLevel(int index, Ion::Events::Event event){
     float delta = (event == Ion::Events::Right || event == Ion::Events::Left) ? 0.1 : 0.02;
     float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
@@ -58,7 +61,9 @@ namespace My {
       bool state = ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ;
       ( (SwitchView *) m_switch_cell.accessoryView()) -> setState( !state );
       if (!state){
-        Ion::setBlinking()
+        Ion::LED::setBlinking(gaugesSelectedPeriod(), 0.5);
+      }else {
+        Ion::LED::setColor( Ion::LED::getColor());
       }
       m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
       return true;
