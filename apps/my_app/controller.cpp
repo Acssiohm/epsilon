@@ -13,6 +13,7 @@ namespace My {
   ViewController(parentResponder),
   m_table(this) {
     m_switch_cell.setMessageFont(KDFont::LargeFont);
+    ( (SwitchView *) m_switch_cell.accessoryView()) -> setState( false );
     for (int i = 0; i < k_numberOfGaugeCells; i++){
       m_gaugeCells[i].setMessageFont(KDFont::LargeFont);
     }
