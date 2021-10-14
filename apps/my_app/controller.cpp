@@ -23,7 +23,7 @@ namespace My {
   View * MyController::view() {
     return &m_table;
   }
-  KDColor gaugesSelectedColor(){
+  KDColor MyController::gaugesSelectedColor(){
     uint8_t r = ( (GaugeView *) m_gaugeCells[0].accessoryView() ) -> level() * 0xFF;
     uint8_t g = ( (GaugeView *) m_gaugeCells[1].accessoryView() ) -> level() * 0xFF;
     uint8_t b = ( (GaugeView *) m_gaugeCells[2].accessoryView() ) -> level() * 0xFF;
