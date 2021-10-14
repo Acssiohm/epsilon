@@ -54,7 +54,9 @@ namespace My {
       KDColor clr = gaugesSelectedColor();
       Ion::LED::setColor(clr);
       ( (CustomGaugeView * ) m_gaugeCells[3].accessoryView()  ) -> setColor(clr);
-
+      if ( ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ){
+        Ion::LED::setBlinking(gaugesSelectedPeriod(), 0.5);
+      }
       return true;
     }
     if (rowIndex == k_numberOfGaugeCells - 1 && (event == Ion::Events::OK || event == Ion::Events::EXE)){
