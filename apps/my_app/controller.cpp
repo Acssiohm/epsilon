@@ -33,7 +33,10 @@ namespace My {
     return KDColor::RGB888(r, g, b);    
   }
   int MyController::gaugesSelectedPeriod(){
-     return ( (GaugeView *) m_gaugeCells[3].accessoryView() ) -> level() * 0xFFFF;
+     return ( (GaugeView *) m_gaugeCells[3].accessoryView() ) -> level() * 1999 + 1;
+  }
+  float MyController::gaugesSelectedDutyCycle(){
+     return ( (GaugeView *) m_gaugeCells[4].accessoryView() ) -> level();
   }
   void MyController::updateGaugeLevel(int index, Ion::Events::Event event){
     float delta = (event == Ion::Events::Right || event == Ion::Events::Left) ? 0.1 : 0.02;
@@ -45,9 +48,9 @@ namespace My {
 
   bool MyController::handleEvent(Ion::Events::Event event){
     int rowIndex = selectedRow();
-    if ( rowIndex != k_numberOfGaugeCells - 1 && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
+    if ( rowIndex != k_numberOfGaugeCells - 2 && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
       
-      int gaugeIndex = rowIndex >= k_numberOfGaugeCells ? rowIndex - 1 : rowIndex; 
+      int gaugeIndex = rowIndex >= k_numberOfGaugeCells - 1 ? rowIndex - 1 : rowIndex; 
      
       updateGaugeLevel(gaugeIndex, event);
       
@@ -56,15 +59,15 @@ namespace My {
       Ion::LED::setColor(clr);
       ( (CustomGaugeView * ) m_gaugeCells[3].accessoryView()  ) -> setColor(clr);
       if ( ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ){
-        Ion::LED::setBlinking(gaugesSelectedPeriod(), 0.5);
+        Ion::LED::setBlinking(gaugesSelectedPeriod(), gaugesSelectedDutyCycle());
       }
       return true;
     }
-    if (rowIndex == k_numberOfGaugeCells - 1 && (event == Ion::Events::OK || event == Ion::Events::EXE)){
+    if (rowIndex == k_numberOfGaugeCells - 2 && (event == Ion::Events::OK || event == Ion::Events::EXE)){
       bool state = ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ;
       ( (SwitchView *) m_switch_cell.accessoryView()) -> setState( !state );
       if (!state){
-        Ion::LED::setBlinking(gaugesSelectedPeriod(), 0.5);
+        Ion::LED::setBlinking(gaugesSelectedPeriod(), gaugesSelectedDutyCycle());
       }else {
         Ion::LED::setColor( Ion::LED::getColor());
       }
@@ -75,7 +78,7 @@ namespace My {
   }
 
   void MyController::willDisplayCellForIndex(HighlightCell * cell, int index) {
-    if (index == k_numberOfGaugeCells - 1){
+    if (index == k_numberOfGaugeCells - 2){
       MessageTableCellWithSwitch * mySwitchCell = (MessageTableCellWithSwitch *)cell;
       mySwitchCell -> setMessage(messageAtIndex(index));  
       return ;
@@ -108,7 +111,7 @@ namespace My {
     return 1;
   }
   int MyController::typeAtLocation(int i, int j) {
-    if (j < k_numberOfGaugeCells - 1 || j == k_numberOfGaugeCells ){
+    if (j < k_numberOfGaugeCells - 2 || j >= k_numberOfGaugeCells - 1  ){
       return 0;
     }
     return 1;
@@ -121,7 +124,7 @@ namespace My {
   }
 
   I18n::Message MyController::messageAtIndex(int index){
-    I18n::Message msgs[] = {I18n::Message::MSG1, I18n::Message::MSG2, I18n::Message::MSG3, I18n::Message::MSG4, I18n::Message::MSG45 };
+    I18n::Message msgs[] = {I18n::Message::MSG1, I18n::Message::MSG2, I18n::Message::MSG3, I18n::Message::MSG4, I18n::Message::MSG45 , I18n::Message::MSG46 };
     return msgs[index];
   }
 }
