@@ -17,9 +17,14 @@ namespace My {
     for (int i = 0; i < k_numberOfGaugeCells; i++){
       m_gaugeCells[i].setMessageFont(KDFont::LargeFont);
     }
+    KDColor currentColor = Ion::LED::getColor();
     ( (CustomGaugeView * ) m_gaugeCells[0].accessoryView()  ) -> setColor(Palette::Red);
+    ( (GaugeView * ) m_gaugeCells[0].accessoryView()  ) -> setLevel((float)currentColor.red() / 0xFF);
     ( (CustomGaugeView * ) m_gaugeCells[1].accessoryView()  ) -> setColor(Palette::Green);
+    ( (GaugeView * ) m_gaugeCells[1].accessoryView()  ) -> setLevel((float)currentColor.green() / 0xFF);
     ( (CustomGaugeView * ) m_gaugeCells[2].accessoryView()  ) -> setColor(Palette::Blue);
+    ( (GaugeView * ) m_gaugeCells[2].accessoryView()  ) -> setLevel((float)currentColor.blue() / 0xFF);
+
   }
 
   View * MyController::view() {
@@ -45,32 +50,33 @@ namespace My {
     ( (GaugeView *) m_gaugeCells[index].accessoryView() ) -> setLevel(lvl + direction);
     m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
   }
-
+  void MyController::setLEDBlinking(bool blink){
+    if (blink){
+        Ion::LED::setBlinking(gaugesSelectedPeriod(), gaugesSelectedDutyCycle());
+      }else {
+        Ion::LED::setColor( Ion::LED::getColor());
+      }
+  }
   bool MyController::handleEvent(Ion::Events::Event event){
     int rowIndex = selectedRow();
-    if ( rowIndex != k_numberOfGaugeCells - 2 && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
+    if ( rowIndex != k_indexOfSwitchCell && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
       
       int gaugeIndex = rowIndex >= k_numberOfGaugeCells - 1 ? rowIndex - 1 : rowIndex; 
      
       updateGaugeLevel(gaugeIndex, event);
       
-      
       KDColor clr = gaugesSelectedColor();
       Ion::LED::setColor(clr);
       ( (CustomGaugeView * ) m_gaugeCells[3].accessoryView()  ) -> setColor(clr);
       if ( ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ){
-        Ion::LED::setBlinking(gaugesSelectedPeriod(), gaugesSelectedDutyCycle());
+        setLEDBlinking(true);
       }
       return true;
     }
-    if (rowIndex == k_numberOfGaugeCells - 2 && (event == Ion::Events::OK || event == Ion::Events::EXE)){
+    if (rowIndex == k_indexOfSwitchCell && (event == Ion::Events::OK || event == Ion::Events::EXE)){
       bool state = ( (SwitchView *) m_switch_cell.accessoryView()) -> state() ;
       ( (SwitchView *) m_switch_cell.accessoryView()) -> setState( !state );
-      if (!state){
-        Ion::LED::setBlinking(gaugesSelectedPeriod(), gaugesSelectedDutyCycle());
-      }else {
-        Ion::LED::setColor( Ion::LED::getColor());
-      }
+      setLEDBlinking(!state);
       m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
       return true;
     }

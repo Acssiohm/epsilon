@@ -29,9 +29,12 @@ public:
 	void updateGaugeLevel(int index, Ion::Events::Event event);
 	int gaugesSelectedPeriod();
 	float gaugesSelectedDutyCycle();
+	void setLEDBlinking(bool blink = true);
+
 private:
 	I18n::Message messageAtIndex(int index);
 
+	constexpr static int k_indexOfSwitchCell = 3;
 	constexpr static int k_numberOfGaugeCells = 3+2;
 	MessageTableCellWithCustomGauge m_gaugeCells[k_numberOfGaugeCells];
 	MessageTableCellWithSwitch m_switch_cell;
