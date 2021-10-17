@@ -18,6 +18,7 @@ namespace My {
       m_gaugeCells[i].setMessageFont(KDFont::LargeFont);
     }
     KDColor currentColor = Ion::LED::getColor();
+    ( (CustomGaugeView * ) m_gaugeCells[3].accessoryView()  ) -> setColor(currentColor);
     ( (CustomGaugeView * ) m_gaugeCells[0].accessoryView()  ) -> setColor(Palette::Red);
     ( (GaugeView * ) m_gaugeCells[0].accessoryView()  ) -> setLevel((float)currentColor.red() / 0xFF);
     ( (CustomGaugeView * ) m_gaugeCells[1].accessoryView()  ) -> setColor(Palette::Green);
@@ -44,7 +45,7 @@ namespace My {
      return ( (GaugeView *) m_gaugeCells[4].accessoryView() ) -> level();
   }
   void MyController::updateGaugeLevel(int index, Ion::Events::Event event){
-    float delta = (event == Ion::Events::Right || event == Ion::Events::Left) ? 0.1 : 0.02;
+    float delta = (event == Ion::Events::Right || event == Ion::Events::Left) ? 0.1 : 0.01;
     float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
     float lvl = ( (GaugeView *) m_gaugeCells[index].accessoryView() ) -> level();
     ( (GaugeView *) m_gaugeCells[index].accessoryView() ) -> setLevel(lvl + direction);
