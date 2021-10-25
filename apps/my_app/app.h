@@ -1,6 +1,6 @@
 #ifndef MY_APP_H
 #define MY_APP_H
-#include "controller.h"
+#include "led_controller.h"
 #include "../shared/shared_app.h"
 
 
@@ -22,7 +22,7 @@ public:
   TELEMETRY_ID("My");
 private:
   App(Snapshot * snapshot);
-  MyController m_tab1;
+  LED_Controller m_led_tab;
   TabViewController m_main;
 };
 

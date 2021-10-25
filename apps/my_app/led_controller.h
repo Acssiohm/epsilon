@@ -8,11 +8,11 @@
 
 namespace My {
 
-class MyController : public ViewController, public ListViewDataSource, public SelectableTableViewDataSource {
+class LED_Controller : public ViewController, public ListViewDataSource, public SelectableTableViewDataSource {
 	
 public:
-	MyController(Responder * parentResponder);
-	const char * title() { return I18n::translate(I18n::Message::MSG5); }
+	LED_Controller(Responder * parentResponder);
+	const char * title() { return I18n::translate(I18n::Message::LedControllerTab); }
 	View * view() override;
 	// KDCoordinate cellWidth() override;
 	bool handleEvent(Ion::Events::Event event) override;

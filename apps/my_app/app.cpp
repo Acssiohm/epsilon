@@ -31,8 +31,8 @@ App::Descriptor * App::Snapshot::descriptor() {
 
 App::App(Snapshot * snapshot) :
   ::App(snapshot, &m_main, I18n::Message::Warning),
-  m_tab1(&m_main),
-  m_main(&m_modalViewController, snapshot, &m_tab1, nullptr, nullptr, nullptr)
+  m_led_tab(&m_main),
+  m_main(&m_modalViewController, snapshot, &m_led_tab, nullptr, nullptr, nullptr)
 {
 }
 

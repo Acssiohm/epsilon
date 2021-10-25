@@ -1,4 +1,4 @@
-#include "controller.h"
+#include "led_controller.h"
 #include <kandinsky.h>
 #include <ion.h>
 #include <apps/i18n.h>
@@ -9,7 +9,7 @@ using namespace Shared;
 
 namespace My {
 
-  MyController::MyController(Responder * parentResponder) : 
+  LED_Controller::LED_Controller(Responder * parentResponder) : 
   ViewController(parentResponder),
   m_table(this) {
     m_switch_cell.setMessageFont(KDFont::LargeFont);
@@ -28,37 +28,37 @@ namespace My {
 
   }
 
-  View * MyController::view() {
+  View * LED_Controller::view() {
     return &m_table;
   }
 
-  KDColor MyController::gaugesSelectedColor(){
+  KDColor LED_Controller::gaugesSelectedColor(){
     uint8_t r = ( (GaugeView *) m_gaugeCells[0].accessoryView() ) -> level() * 0xFF;
     uint8_t g = ( (GaugeView *) m_gaugeCells[1].accessoryView() ) -> level() * 0xFF;
     uint8_t b = ( (GaugeView *) m_gaugeCells[2].accessoryView() ) -> level() * 0xFF;
     return KDColor::RGB888(r, g, b);    
   }
-  int MyController::gaugesSelectedPeriod(){
+  int LED_Controller::gaugesSelectedPeriod(){
      return ( (GaugeView *) m_gaugeCells[3].accessoryView() ) -> level() * 1999 + 1;
   }
-  float MyController::gaugesSelectedDutyCycle(){
+  float LED_Controller::gaugesSelectedDutyCycle(){
      return ( (GaugeView *) m_gaugeCells[4].accessoryView() ) -> level();
   }
-  void MyController::updateGaugeLevel(int index, Ion::Events::Event event){
+  void LED_Controller::updateGaugeLevel(int index, Ion::Events::Event event){
     float delta = (event == Ion::Events::Right || event == Ion::Events::Left) ? 0.1 : 0.01;
     float direction = (event == Ion::Events::Right || event == Ion::Events::Plus) ? delta : -delta;
     float lvl = ( (GaugeView *) m_gaugeCells[index].accessoryView() ) -> level();
     ( (GaugeView *) m_gaugeCells[index].accessoryView() ) -> setLevel(lvl + direction);
     m_table.reloadCellAtLocation(m_table.selectedColumn(), m_table.selectedRow());
   }
-  void MyController::setLEDBlinking(bool blink){
+  void LED_Controller::setLEDBlinking(bool blink){
     if (blink){
         Ion::LED::setBlinking(gaugesSelectedPeriod(), gaugesSelectedDutyCycle());
       }else {
         Ion::LED::setColor( Ion::LED::getColor());
       }
   }
-  bool MyController::handleEvent(Ion::Events::Event event){
+  bool LED_Controller::handleEvent(Ion::Events::Event event){
     int rowIndex = selectedRow();
     if ( rowIndex != k_indexOfSwitchCell && (event == Ion::Events::Left || event == Ion::Events::Right || event == Ion::Events::Minus || event == Ion::Events::Plus)) {
       
@@ -84,7 +84,7 @@ namespace My {
     return false;
   }
 
-  void MyController::willDisplayCellForIndex(HighlightCell * cell, int index) {
+  void LED_Controller::willDisplayCellForIndex(HighlightCell * cell, int index) {
     if (index == k_numberOfGaugeCells - 2){
       MessageTableCellWithSwitch * mySwitchCell = (MessageTableCellWithSwitch *)cell;
       mySwitchCell -> setMessage(messageAtIndex(index));  
@@ -93,45 +93,45 @@ namespace My {
     MessageTableCellWithGauge * myGaugeCell = (MessageTableCellWithGauge *)cell;
     myGaugeCell->setMessage(messageAtIndex(index));
   }
-  int MyController::numberOfRows() const {
+  int LED_Controller::numberOfRows() const {
     return k_numberOfGaugeCells + 1;
   }
-  KDCoordinate MyController::rowHeight(int j) {
+  KDCoordinate LED_Controller::rowHeight(int j) {
     return Metric::ParameterCellHeight;
   }
-  KDCoordinate MyController::cumulatedHeightFromIndex(int j) {
+  KDCoordinate LED_Controller::cumulatedHeightFromIndex(int j) {
     return j * rowHeight(0);
   }
-  int MyController::indexFromCumulatedHeight(KDCoordinate offsetY) {
+  int LED_Controller::indexFromCumulatedHeight(KDCoordinate offsetY) {
     return offsetY / rowHeight(0);
   }
-  HighlightCell * MyController::reusableCell(int index, int type) {
+  HighlightCell * LED_Controller::reusableCell(int index, int type) {
     if (type == 0){
       return &m_gaugeCells[index];
     }
     return &m_switch_cell;
   }
-  int MyController::reusableCellCount(int type) {
+  int LED_Controller::reusableCellCount(int type) {
     if (type == 0 ){
       return k_numberOfGaugeCells;
     }
     return 1;
   }
-  int MyController::typeAtLocation(int i, int j) {
+  int LED_Controller::typeAtLocation(int i, int j) {
     if (j < k_numberOfGaugeCells - 2 || j >= k_numberOfGaugeCells - 1  ){
       return 0;
     }
     return 1;
   }
-  void MyController::didBecomeFirstResponder() {
+  void LED_Controller::didBecomeFirstResponder() {
     if (selectedRow() < 0) {
       selectCellAtLocation(0, 0);
     }
     Container::activeApp()->setFirstResponder(&m_table);
   }
 
-  I18n::Message MyController::messageAtIndex(int index){
-    I18n::Message msgs[] = {I18n::Message::MSG1, I18n::Message::MSG2, I18n::Message::MSG3, I18n::Message::MSG4, I18n::Message::MSG45 , I18n::Message::MSG46 };
+  I18n::Message LED_Controller::messageAtIndex(int index){
+    I18n::Message msgs[] = {I18n::Message::Red, I18n::Message::Green, I18n::Message::Blue, I18n::Message::Blinking, I18n::Message::Period , I18n::Message::Duty };
     return msgs[index];
   }
 }
