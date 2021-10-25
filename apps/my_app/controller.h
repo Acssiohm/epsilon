@@ -25,13 +25,13 @@ public:
 	int reusableCellCount(int type) override;
 	int typeAtLocation(int i, int j) override;
 	void didBecomeFirstResponder() override; // ?
+
+private:
 	KDColor gaugesSelectedColor();
 	void updateGaugeLevel(int index, Ion::Events::Event event);
 	int gaugesSelectedPeriod();
 	float gaugesSelectedDutyCycle();
 	void setLEDBlinking(bool blink = true);
-
-private:
 	I18n::Message messageAtIndex(int index);
 
 	constexpr static int k_indexOfSwitchCell = 3;
