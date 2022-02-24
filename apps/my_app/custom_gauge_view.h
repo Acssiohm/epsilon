@@ -11,8 +11,4 @@ public:
 protected:
 	KDColor m_color;
 };
-
-
-
-
 #endif
